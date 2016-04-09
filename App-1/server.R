@@ -44,6 +44,7 @@ shinyServer(function(input, output, session) {
   #     when inputs change
   #  2) Its output type is a plot
   # Whenever a field is filled, aggregate all form data
+  # format date from input$date into yyyy-mm-dd format instead of numeric
 
     formData <- reactive({
       data <- sapply(fields, function(x) input[[x]])
@@ -64,9 +65,11 @@ shinyServer(function(input, output, session) {
     # (update with current response when Submit is clicked)
     output$responses <- DT::renderDataTable({
       input$submit
-	  loadData()
+      loadData()
     })     
-  output$distPlot <- renderPlot({
+    # Plot responses
+    # (update with current response when Submit is clicked)
+    output$distPlot <- renderPlot({
   	input$submit
   	validate(
     	need(input$count<=50 & input$count>0,"Please enter a valid number greater than 0 but less than 50"),
